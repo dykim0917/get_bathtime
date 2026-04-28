@@ -359,6 +359,7 @@ h2 {
   font-size: 14px;
 }
 
+.legalSummary,
 .documentBody,
 .supportPanel {
   margin-bottom: 86px;
@@ -367,6 +368,33 @@ h2 {
   border-radius: 8px;
   background: rgba(9, 35, 36, 0.68);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+}
+
+.legalSummary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  margin-bottom: 22px;
+  padding: 0;
+}
+
+.legalSummary div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px;
+  background: rgba(244, 241, 234, 0.035);
+}
+
+.legalSummary strong {
+  color: #98dbc8;
+  font-size: 14px;
+}
+
+.legalSummary span {
+  color: rgba(244, 241, 234, 0.74);
+  line-height: 1.55;
 }
 
 .documentBody article + article {
@@ -388,6 +416,21 @@ h2 {
   color: rgba(244, 241, 234, 0.74);
   font-size: 17px;
   line-height: 1.75;
+}
+
+.documentBody ul {
+  margin: 16px 0 0;
+  padding-left: 22px;
+  color: rgba(244, 241, 234, 0.74);
+}
+
+.documentBody li {
+  padding-left: 4px;
+  line-height: 1.75;
+}
+
+.documentBody li + li {
+  margin-top: 8px;
 }
 
 .supportPanel a:not(.primary) {
@@ -450,9 +493,20 @@ h2 {
 
   .split,
   .cta,
+  .legalSummary,
   .documentBody,
   .supportPanel {
     padding: 24px;
+  }
+
+  .legalSummary {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .legalSummary div {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .documentHero {
