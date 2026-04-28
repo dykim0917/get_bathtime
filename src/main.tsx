@@ -1,11 +1,13 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
-import homeShot from './assets/home-with-history.png';
-import careShot from './assets/care-default.png';
-import recipeShot from './assets/recipe-care.png';
-import timerShot from './assets/timer-running.png';
-import productShot from './assets/product-default.png';
+import homeShot from './assets/KakaoTalk_Photo_2026-04-28-10-54-59 001.jpeg';
+import careShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 002.jpeg';
+import moodShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 003.jpeg';
+import recipeShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 004.jpeg';
+import productShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 005.jpeg';
+import completionShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 006.jpeg';
+import timerShot from './assets/KakaoTalk_Photo_2026-04-28-11-04-19.jpeg';
 
 const appUrl = 'https://app.getbathtime.com';
 const supportEmail = 'getbathtime@gmail.com';
@@ -21,31 +23,38 @@ const legalMeta = {
   cpoEmail: 'getbathtime@gmail.com',
 } as const;
 
-const proof = [
-  ['컨디션 기준 추천', '오늘 몸 상태와 가능한 환경을 먼저 확인합니다.'],
-  ['샤워, 욕조, 족욕 대응', '지금 가능한 방식에 맞춰 온도와 시간을 조정합니다.'],
-  ['타이머까지 연결', '추천에서 끝나지 않고 실제 루틴 진행으로 이어집니다.'],
+const problemCards = [
+  ['오늘 컨디션이 애매할 때', '피로, 수면, 근육 뻐근함, 기분 전환에 맞춰 루틴을 고릅니다.'],
+  ['욕조가 없어도 괜찮게', '욕조, 족욕, 샤워 환경에 맞춰 가능한 방식만 보여줍니다.'],
+  ['무리한 루틴은 먼저 걸러내게', '건강 상태와 안전 조건을 반영해 부담 없는 루틴을 안내합니다.'],
 ] as const;
 
-const steps = [
-  {
-    label: '01',
-    title: '오늘 가능한 환경을 고릅니다',
-    body: '욕조, 샤워, 족욕 중 지금 할 수 있는 방식을 기준으로 시작합니다.',
-    image: careShot,
-  },
-  {
-    label: '02',
-    title: '무리 없는 루틴을 확인합니다',
-    body: '온도, 시간, 준비물, 안전 안내를 한 화면에서 확인합니다.',
-    image: recipeShot,
-  },
-  {
-    label: '03',
-    title: '타이머로 그대로 따라갑니다',
-    body: '음악과 배경 소리를 켜고, 화면을 덜 보면서 쉬는 시간에 집중합니다.',
-    image: timerShot,
-  },
+const flowSteps = [
+  ['01', '오늘 상태 선택', '피곤함, 수면 준비, 근육 뻐근함, 기분 전환 등 지금 필요한 방향을 고릅니다.'],
+  ['02', '가능한 환경 확인', '욕조, 족욕, 샤워 중 지금 가능한 방식에 맞춥니다.'],
+  ['03', '온도·시간·순서 안내', '몇 도로, 얼마나, 어떤 순서로 진행할지 바로 확인합니다.'],
+] as const;
+
+const conditionCards = [
+  '운동 후 뻐근함을 풀어볼까요?',
+  '잠들기 어려울 때 좋은 루틴',
+  '술 마신 다음엔 이렇게 시작해보세요',
+  '붓기가 느껴질 때 해보세요',
+  '스트레스를 풀고 싶을 때',
+] as const;
+
+const moodCards = [
+  '교토 숲으로 잠깐 떠나볼까요?',
+  '비 오는 캠핑 감성으로 쉬어가요',
+  '스노우 캐빈 무드로 하루를 마무리해요',
+  '벽난로 옆 서재 무드로 가라앉아볼까요?',
+] as const;
+
+const safetyCards = [
+  '건강 상태 기반 안전 확인',
+  '권장 수온과 시간 안내',
+  '음주 직후 사용 주의',
+  '불편하면 즉시 중단 안내',
 ] as const;
 
 const privacySections = [
@@ -299,65 +308,156 @@ function HomePage() {
       <main>
         <section className="hero">
           <div className="heroCopy">
-            <h1>오늘 상태에 맞는 목욕 루틴을, 무리 없는 순서로.</h1>
+            <span className="badge">Everyday Bath Guide</span>
+            <h1>오늘 상태에 맞는 목욕·샤워 루틴을 추천받아보세요</h1>
             <p>
-              바스타임은 컨디션과 목욕 환경을 함께 보고, 오늘 가장 편안하게 쉬기 좋은
-              목욕, 샤워, 족욕 루틴을 안내합니다.
+              피곤한 날, 잠들기 어려운 날, 몸이 무거운 날. 바스타임은 지금 컨디션과
+              가능한 환경에 맞춰 온도, 시간, 순서까지 무리 없이 안내합니다.
             </p>
             <div className="actions">
               <a className="primary" href={appUrl}>앱 시작하기</a>
-              <a className="secondary" href="#flow">어떻게 쓰는지 보기</a>
-            </div>
-            <div className="proofGrid">
-              {proof.map(([title, body]) => (
-                <div className="proofCard" key={title}>
-                  <strong>{title}</strong>
-                  <span>{body}</span>
-                </div>
-              ))}
+              <a className="secondary" href="#flow">오늘 루틴 보기</a>
             </div>
           </div>
-          <div className="heroVisual">
-            <img src={homeShot} alt="바스타임 앱 홈 화면" />
+          <div className="heroStack" aria-label="바스타임 앱 화면 미리보기">
+            <img className="phoneShot sideShot leftShot" src={timerShot} alt="바스타임 타이머 화면" />
+            <img className="phoneShot mainShot" src={homeShot} alt="바스타임 앱 홈 화면" />
+            <img className="phoneShot sideShot rightShot" src={completionShot} alt="바스타임 완료 기록 화면" />
           </div>
         </section>
 
-        <section className="section" id="flow">
+        <section className="section problemSection">
           <div className="sectionHeader">
-            <span>GUIDED FLOW</span>
-            <h2>추천만 하지 않고, 바스타임이 끝날 때까지 함께 갑니다.</h2>
+            <span>WHY BATH TIME</span>
+            <h2>막상 쉬려고 하면, 어떻게 씻어야 할지 애매하니까요</h2>
+            <p>
+              피곤해서 따뜻하게 씻고 싶은데 몇 도가 적당한지, 얼마나 해야 하는지 잘 모르고.
+              잠들기 전엔 뜨거운 물이 좋은지, 가볍게 샤워만 하는 게 나은지도 헷갈립니다.
+              바스타임은 이 막연함을 줄여줍니다.
+            </p>
           </div>
-          <div className="steps">
-            {steps.map((step) => (
-              <article className="stepCard" key={step.title}>
-                <img src={step.image} alt={`${step.title} 화면`} />
-                <div>
-                  <span>{step.label}</span>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
-                </div>
+          <div className="cardGrid three">
+            {problemCards.map(([title, body]) => (
+              <article className="infoCard" key={title}>
+                <h3>{title}</h3>
+                <p>{body}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section split">
-          <div>
-            <span className="eyebrow">PRODUCT PICKS</span>
-            <h2>집에 있는 방식으로 시작하고, 필요하면 제품 추천까지 봅니다.</h2>
-            <p>
-              입욕제, 샤워 아이템, 바디워시를 루틴 맥락에 맞춰 보여줍니다.
-              처음 쓰는 사람도 바로 이해할 수 있게 가격대와 판매처를 같이 둡니다.
-            </p>
-            <a className="secondary inline" href={appUrl}>앱 둘러보기</a>
+        <section className="section flowSection" id="flow">
+          <div className="sectionHeader">
+            <span>CORE FLOW</span>
+            <h2>컨디션과 환경만 고르면, 오늘 루틴이 준비됩니다</h2>
           </div>
-          <img src={productShot} alt="바스타임 제품 추천 화면" />
+          <div className="flowLayout">
+            <div className="flowSteps">
+              {flowSteps.map(([label, title, body]) => (
+                <article className="flowStep" key={title}>
+                  <span>{label}</span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="screenRail">
+              <img className="phoneShot" src={careShot} alt="바스타임 컨디션 루틴 화면" />
+              <img className="phoneShot" src={recipeShot} alt="바스타임 루틴 상세 화면" />
+            </div>
+          </div>
+        </section>
+
+        <section className="section featureSplit">
+          <div className="featureCopy">
+            <span>CONDITION ROUTINES</span>
+            <h2>몸 상태에 맞춘 컨디션 루틴</h2>
+            <p>
+              운동 후 뻐근한 날, 잠들기 어려운 밤, 술 마신 다음 날, 몸이 무겁고 붓는 날.
+              바스타임은 오늘 몸 상태에 맞춰 무리 없이 따라할 수 있는 루틴을 추천합니다.
+            </p>
+            <div className="tagCloud">
+              {conditionCards.map((card) => <span key={card}>{card}</span>)}
+            </div>
+          </div>
+          <img className="phoneShot featurePhone" src={careShot} alt="컨디션별 루틴 목록 화면" />
+        </section>
+
+        <section className="section featureSplit reverse">
+          <div className="featureCopy">
+            <span>MOOD ROUTINES</span>
+            <h2>분위기를 바꾸고 싶은 날엔, 무드 루틴</h2>
+            <p>
+              그냥 씻는 시간이 아니라, 잠깐 다른 곳에 머무는 듯한 바스타임.
+              교토 숲, 비 오는 캠핑, 겨울 캐빈, 벽난로 옆 서재처럼 오늘 기분에 맞는
+              분위기와 실제 루틴을 함께 시작할 수 있습니다.
+            </p>
+            <div className="tagCloud">
+              {moodCards.map((card) => <span key={card}>{card}</span>)}
+            </div>
+          </div>
+          <img className="phoneShot featurePhone" src={moodShot} alt="바스타임 무드 루틴 화면" />
+        </section>
+
+        <section className="section executionSection">
+          <div className="sectionHeader">
+            <span>RUN AND RECORD</span>
+            <h2>추천에서 끝나지 않고, 끝까지 따라갈 수 있게</h2>
+            <p>
+              루틴을 고른 뒤에는 타이머로 진행하고, 완료 후에는 오늘의 바스타임을 기록합니다.
+              짧게 쉬어도 괜찮습니다. 바스타임은 성취보다, 오늘 나에게 맞는 쉼을 쌓아갑니다.
+            </p>
+          </div>
+          <div className="screenRail wide">
+            <img className="phoneShot" src={recipeShot} alt="레시피 상세 화면" />
+            <img className="phoneShot" src={timerShot} alt="타이머 진행 화면" />
+            <img className="phoneShot" src={completionShot} alt="완료 기록 화면" />
+          </div>
+        </section>
+
+        <section className="section safetySection">
+          <div className="sectionHeader">
+            <span>SAFETY FIRST</span>
+            <h2>편안함보다 먼저, 무리하지 않는 것</h2>
+            <p>
+              바스타임은 더 강한 루틴을 추천하기보다 위험할 수 있는 온도와 시간을 먼저 걸러냅니다.
+              건강 상태가 걱정되는 경우, 무리한 입욕이나 냉수 단계는 피하도록 안내합니다.
+            </p>
+          </div>
+          <div className="cardGrid four">
+            {safetyCards.map((card) => (
+              <article className="safetyCard" key={card}>
+                <span aria-hidden="true">✓</span>
+                <h3>{card}</h3>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section productPreview">
+          <div>
+            <span>COMING NEXT</span>
+            <h2>루틴에 어울리는 제품과 공간까지</h2>
+            <p>
+              바스타임은 입욕제, 바디워시, 샤워 아이템처럼 루틴에 더하기 좋은 제품도 함께 소개합니다.
+              앞으로는 집에서의 목욕·샤워를 넘어, 감성 사우나와 웰니스 스팟까지 연결하는
+              목욕·샤워 전문 웰니스 가이드로 확장됩니다.
+            </p>
+          </div>
+          <img className="phoneShot featurePhone" src={productShot} alt="바스타임 제품 추천 화면" />
         </section>
 
         <section className="cta">
           <span>START TODAY</span>
-          <h2>오늘 가능한 방식으로, 무리 없이 시작하는 바스타임.</h2>
-          <a className="primary" href={appUrl}>앱으로 이동</a>
+          <h2>오늘은 어떻게 쉬어볼까요?</h2>
+          <p>지금 컨디션과 가능한 환경에 맞춰 오늘의 바스타임을 시작해보세요.</p>
+          <div className="actions center">
+            <a className="primary" href={appUrl}>바스타임 시작하기</a>
+            <a className="secondary" href={appUrl}>앱 다운로드</a>
+            <a className="secondary" href={appUrl}>웹에서 먼저 보기</a>
+          </div>
         </section>
       </main>
       <Footer />
