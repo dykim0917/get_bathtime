@@ -103,8 +103,12 @@ main,
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 30px;
+}
+
+.brandMark img {
+  width: 26px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .siteHeader nav,
@@ -471,8 +475,17 @@ h2 {
 }
 
 .siteFooter strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--accent);
   font-size: 14px;
+}
+
+.siteFooter strong img {
+  width: 22px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .siteFooter span {

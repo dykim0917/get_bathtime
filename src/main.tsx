@@ -8,6 +8,7 @@ import recipeShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 004.jpeg';
 import productShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 005.jpeg';
 import completionShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 006.jpeg';
 import timerShot from './assets/KakaoTalk_Photo_2026-04-28-11-04-19.jpeg';
+import bathTimeLogo from './assets/bathtime.svg';
 
 const appUrl = 'https://app.getbathtime.com';
 const supportEmail = 'getbathtime@gmail.com';
@@ -272,7 +273,9 @@ function Header() {
   return (
     <header className="siteHeader">
       <a className="brandRow" href="/">
-        <div className="brandMark" aria-hidden="true">⌁</div>
+        <span className="brandMark">
+          <img src={bathTimeLogo} alt="" aria-hidden="true" />
+        </span>
         <span>BATH TIME</span>
       </a>
       <nav aria-label="주요 메뉴">
@@ -289,7 +292,10 @@ function Footer() {
   return (
     <footer className="siteFooter">
       <div>
-        <strong>BATH TIME</strong>
+        <strong>
+          <img src={bathTimeLogo} alt="" aria-hidden="true" />
+          BATH TIME
+        </strong>
         <span>오늘 상태에 맞는 목욕 루틴 가이드</span>
       </div>
       <nav aria-label="정책 메뉴">
