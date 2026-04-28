@@ -37,25 +37,31 @@ const flowSteps = [
 ] as const;
 
 const conditionCards = [
-  '운동 후 뻐근함을 풀어볼까요?',
-  '잠들기 어려울 때 좋은 루틴',
-  '술 마신 다음엔 이렇게 시작해보세요',
-  '붓기가 느껴질 때 해보세요',
-  '스트레스를 풀고 싶을 때',
+  ['근육', '운동 후 뻐근함을 풀어볼까요?', '샤워 5분 · 41도'],
+  ['수면', '잠들기 어려울 때 좋은 루틴', '샤워 6분 · 38도'],
+  ['회복', '술 마신 다음엔 이렇게 시작해보세요', '족욕 중심 · 미지근하게'],
+  ['순환', '붓기가 느껴질 때 해보세요', '족욕 10분 · 39도'],
+  ['전환', '스트레스를 풀고 싶을 때', '가벼운 샤워 · 빗소리'],
 ] as const;
 
 const moodCards = [
-  '교토 숲으로 잠깐 떠나볼까요?',
-  '비 오는 캠핑 감성으로 쉬어가요',
-  '스노우 캐빈 무드로 하루를 마무리해요',
-  '벽난로 옆 서재 무드로 가라앉아볼까요?',
+  ['forest', '교토 숲', '샤워 5분, 숲 분위기로 전환해요.'],
+  ['rain', '비 오는 캠핑', '물소리와 함께 짧게 쉬어가요.'],
+  ['snow', '스노우 캐빈', '따뜻하게 하루를 닫는 무드 루틴.'],
+  ['library', '벽난로 옆 서재', '가라앉는 분위기로 호흡을 낮춰요.'],
 ] as const;
 
 const safetyCards = [
-  '건강 상태 기반 안전 확인',
-  '권장 수온과 시간 안내',
-  '음주 직후 사용 주의',
-  '불편하면 즉시 중단 안내',
+  ['상태 입력', '건강 상태 기반 안전 확인'],
+  ['루틴 필터', '무리한 온도와 시간 제외'],
+  ['주의 안내', '음주 직후 사용 주의'],
+  ['중단 기준', '불편하면 즉시 중단 안내'],
+] as const;
+
+const nextAxes = [
+  ['Routine', '오늘 상태에 맞는 목욕·샤워 흐름'],
+  ['Product', '루틴에 더하기 좋은 입욕제와 샤워 아이템'],
+  ['Spot', '감성 사우나와 웰니스 스팟으로 확장'],
 ] as const;
 
 const privacySections = [
@@ -312,7 +318,12 @@ function HomePage() {
     <>
       <Header />
       <main>
-        <section className="hero">
+        <section className="hero scene sceneHero">
+          <div className="heroSteam" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
           <div className="heroCopy">
             <span className="badge">Everyday Bath Guide</span>
             <h1>오늘 상태에 맞는 목욕·샤워 루틴을 추천받아보세요</h1>
@@ -332,7 +343,7 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section problemSection">
+        <section className="section scene problemSection">
           <div className="sectionHeader">
             <span>WHY BATH TIME</span>
             <h2>막상 쉬려고 하면, 어떻게 씻어야 할지 애매하니까요</h2>
@@ -342,9 +353,14 @@ function HomePage() {
               바스타임은 이 막연함을 줄여줍니다.
             </p>
           </div>
-          <div className="cardGrid three">
+          <div className="questionBoard" aria-label="사용자가 느끼는 고민">
+            <p>뜨겁게 씻어야 할까?</p>
+            <p>샤워만 해도 괜찮을까?</p>
+            <p>얼마나 해야 무리 없을까?</p>
+          </div>
+          <div className="problemGrid">
             {problemCards.map(([title, body]) => (
-              <article className="infoCard" key={title}>
+              <article className="problemPoint" key={title}>
                 <h3>{title}</h3>
                 <p>{body}</p>
               </article>
@@ -352,13 +368,13 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section flowSection" id="flow">
+        <section className="section scene flowSection" id="flow">
           <div className="sectionHeader">
             <span>CORE FLOW</span>
             <h2>컨디션과 환경만 고르면, 오늘 루틴이 준비됩니다</h2>
           </div>
           <div className="flowLayout">
-            <div className="flowSteps">
+            <div className="flowSteps routineTimeline">
               {flowSteps.map(([label, title, body]) => (
                 <article className="flowStep" key={title}>
                   <span>{label}</span>
@@ -376,7 +392,7 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section featureSplit">
+        <section className="section scene conditionSection">
           <div className="featureCopy">
             <span>CONDITION ROUTINES</span>
             <h2>몸 상태에 맞춘 컨디션 루틴</h2>
@@ -384,14 +400,21 @@ function HomePage() {
               운동 후 뻐근한 날, 잠들기 어려운 밤, 술 마신 다음 날, 몸이 무겁고 붓는 날.
               바스타임은 오늘 몸 상태에 맞춰 무리 없이 따라할 수 있는 루틴을 추천합니다.
             </p>
-            <div className="tagCloud">
-              {conditionCards.map((card) => <span key={card}>{card}</span>)}
+            <div className="conditionMatrix">
+              {conditionCards.map(([label, title, meta]) => (
+                <article className="conditionChip" key={title}>
+                  <span>{label}</span>
+                  <strong>{title}</strong>
+                  <small>{meta}</small>
+                </article>
+              ))}
             </div>
           </div>
           <img className="phoneShot featurePhone" src={careShot} alt="컨디션별 루틴 목록 화면" />
         </section>
 
-        <section className="section featureSplit reverse">
+        <section className="section scene moodSection">
+          <img className="phoneShot moodPhone" src={moodShot} alt="바스타임 무드 루틴 화면" />
           <div className="featureCopy">
             <span>MOOD ROUTINES</span>
             <h2>분위기를 바꾸고 싶은 날엔, 무드 루틴</h2>
@@ -400,14 +423,18 @@ function HomePage() {
               교토 숲, 비 오는 캠핑, 겨울 캐빈, 벽난로 옆 서재처럼 오늘 기분에 맞는
               분위기와 실제 루틴을 함께 시작할 수 있습니다.
             </p>
-            <div className="tagCloud">
-              {moodCards.map((card) => <span key={card}>{card}</span>)}
+            <div className="moodGallery">
+              {moodCards.map(([tone, title, body]) => (
+                <article className={`moodCard ${tone}`} key={title}>
+                  <span>{title}</span>
+                  <p>{body}</p>
+                </article>
+              ))}
             </div>
           </div>
-          <img className="phoneShot featurePhone" src={moodShot} alt="바스타임 무드 루틴 화면" />
         </section>
 
-        <section className="section executionSection">
+        <section className="section scene executionSection">
           <div className="sectionHeader">
             <span>RUN AND RECORD</span>
             <h2>추천에서 끝나지 않고, 끝까지 따라갈 수 있게</h2>
@@ -416,14 +443,23 @@ function HomePage() {
               짧게 쉬어도 괜찮습니다. 바스타임은 성취보다, 오늘 나에게 맞는 쉼을 쌓아갑니다.
             </p>
           </div>
-          <div className="screenRail wide">
-            <img className="phoneShot" src={recipeShot} alt="레시피 상세 화면" />
-            <img className="phoneShot" src={timerShot} alt="타이머 진행 화면" />
-            <img className="phoneShot" src={completionShot} alt="완료 기록 화면" />
+          <div className="executionFlow" aria-label="추천에서 기록까지 이어지는 흐름">
+            <article>
+              <span>Recipe</span>
+              <img className="phoneShot" src={recipeShot} alt="레시피 상세 화면" />
+            </article>
+            <article className="centerStage">
+              <span>Timer</span>
+              <img className="phoneShot" src={timerShot} alt="타이머 진행 화면" />
+            </article>
+            <article>
+              <span>Record</span>
+              <img className="phoneShot" src={completionShot} alt="완료 기록 화면" />
+            </article>
           </div>
         </section>
 
-        <section className="section safetySection">
+        <section className="section scene safetySection">
           <div className="sectionHeader">
             <span>SAFETY FIRST</span>
             <h2>편안함보다 먼저, 무리하지 않는 것</h2>
@@ -432,17 +468,18 @@ function HomePage() {
               건강 상태가 걱정되는 경우, 무리한 입욕이나 냉수 단계는 피하도록 안내합니다.
             </p>
           </div>
-          <div className="cardGrid four">
-            {safetyCards.map((card) => (
-              <article className="safetyCard" key={card}>
-                <span aria-hidden="true">✓</span>
-                <h3>{card}</h3>
+          <div className="safetyFilter" aria-label="안전 필터 흐름">
+            {safetyCards.map(([label, title], index) => (
+              <article className="safetyStep" key={title}>
+                <small>{label}</small>
+                <h3>{title}</h3>
+                {index < safetyCards.length - 1 ? <span className="filterLine" aria-hidden="true" /> : null}
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section productPreview">
+        <section className="section scene productPreview">
           <div>
             <span>COMING NEXT</span>
             <h2>루틴에 어울리는 제품과 공간까지</h2>
@@ -451,11 +488,19 @@ function HomePage() {
               앞으로는 집에서의 목욕·샤워를 넘어, 감성 사우나와 웰니스 스팟까지 연결하는
               목욕·샤워 전문 웰니스 가이드로 확장됩니다.
             </p>
+            <div className="nextAxes">
+              {nextAxes.map(([title, body]) => (
+                <article key={title}>
+                  <strong>{title}</strong>
+                  <span>{body}</span>
+                </article>
+              ))}
+            </div>
           </div>
           <img className="phoneShot featurePhone" src={productShot} alt="바스타임 제품 추천 화면" />
         </section>
 
-        <section className="cta">
+        <section className="cta scene">
           <span>START TODAY</span>
           <h2>오늘은 어떻게 쉬어볼까요?</h2>
           <p>지금 컨디션과 가능한 환경에 맞춰 오늘의 바스타임을 시작해보세요.</p>
