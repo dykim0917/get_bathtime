@@ -151,12 +151,6 @@ main,
   color: var(--accent);
 }
 
-.navDisabled {
-  color: var(--accent);
-  cursor: not-allowed;
-  opacity: 0.72;
-}
-
 .hero {
   position: relative;
   isolation: isolate;
