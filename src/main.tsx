@@ -86,11 +86,10 @@ function useScrollReveal() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      document.documentElement.classList.remove('reveal-ready');
       targets.forEach((target) => target.classList.add('is-visible'));
       return;
     }
-
-    document.documentElement.classList.add('reveal-ready');
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -113,7 +112,6 @@ function useScrollReveal() {
 
     return () => {
       observer.disconnect();
-      document.documentElement.classList.remove('reveal-ready');
     };
   }, []);
 }
