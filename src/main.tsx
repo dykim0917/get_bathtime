@@ -9,6 +9,16 @@ import productShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 005.jpeg';
 import completionShot from './assets/KakaoTalk_Photo_2026-04-28-10-55-00 006.jpeg';
 import timerShot from './assets/KakaoTalk_Photo_2026-04-28-11-04-19.jpeg';
 import bathTimeLogo from './assets/bathtime.svg';
+import sleepReadyImage from './assets/app-assets/care/sleep_ready_deep.jpg';
+import muscleReliefImage from './assets/app-assets/care/muscle_relief_deep.jpg';
+import stressReliefImage from './assets/app-assets/care/stress_relief_deep.jpg';
+import kyotoForestImage from './assets/app-assets/trip/kyoto_forest_deep.jpg';
+import rainyCampingImage from './assets/app-assets/trip/rainy_camping_deep.jpg';
+import snowCabinImage from './assets/app-assets/trip/snow_cabin_deep.jpg';
+import firesideLibraryImage from './assets/app-assets/trip/fireside_library_fireside_library_deep.jpg';
+import bathProductImage from './assets/app-assets/products/bs_v1_014.jpg';
+import showerProductImage from './assets/app-assets/products/bs_v1_003.jpg';
+import wellnessProductImage from './assets/app-assets/products/bs_v1_016.jpg';
 
 const appUrl = 'https://app.getbathtime.com';
 const supportEmail = 'getbathtime@gmail.com';
@@ -37,18 +47,18 @@ const flowSteps = [
 ] as const;
 
 const conditionCards = [
-  ['근육', '운동 후 뻐근함을 풀어볼까요?', '샤워 5분 · 41도'],
-  ['수면', '잠들기 어려울 때 좋은 루틴', '샤워 6분 · 38도'],
-  ['회복', '술 마신 다음엔 이렇게 시작해보세요', '족욕 중심 · 미지근하게'],
-  ['순환', '붓기가 느껴질 때 해보세요', '족욕 10분 · 39도'],
-  ['전환', '스트레스를 풀고 싶을 때', '가벼운 샤워 · 빗소리'],
+  ['근육', '운동 후 뻐근함을 풀어볼까요?', '샤워 5분 · 41도', muscleReliefImage],
+  ['수면', '잠들기 어려울 때 좋은 루틴', '샤워 6분 · 38도', sleepReadyImage],
+  ['회복', '술 마신 다음엔 이렇게 시작해보세요', '족욕 중심 · 미지근하게', null],
+  ['순환', '붓기가 느껴질 때 해보세요', '족욕 10분 · 39도', null],
+  ['전환', '스트레스를 풀고 싶을 때', '가벼운 샤워 · 빗소리', stressReliefImage],
 ] as const;
 
 const moodCards = [
-  ['forest', '교토 숲', '샤워 5분, 숲 분위기로 전환해요.'],
-  ['rain', '비 오는 캠핑', '물소리와 함께 짧게 쉬어가요.'],
-  ['snow', '스노우 캐빈', '따뜻하게 하루를 닫는 무드 루틴.'],
-  ['library', '벽난로 옆 서재', '가라앉는 분위기로 호흡을 낮춰요.'],
+  ['forest', '교토 숲', '샤워 5분, 숲 분위기로 전환해요.', kyotoForestImage],
+  ['rain', '비 오는 캠핑', '물소리와 함께 짧게 쉬어가요.', rainyCampingImage],
+  ['snow', '스노우 캐빈', '따뜻하게 하루를 닫는 무드 루틴.', snowCabinImage],
+  ['library', '벽난로 옆 서재', '가라앉는 분위기로 호흡을 낮춰요.', firesideLibraryImage],
 ] as const;
 
 const safetyCards = [
@@ -59,9 +69,15 @@ const safetyCards = [
 ] as const;
 
 const nextAxes = [
-  ['Routine', '오늘 상태에 맞는 목욕·샤워 흐름'],
-  ['Product', '루틴에 더하기 좋은 입욕제와 샤워 아이템'],
-  ['Spot', '감성 사우나와 웰니스 스팟으로 확장'],
+  ['Routine', '오늘 상태에 맞는 목욕·샤워 흐름', sleepReadyImage],
+  ['Product', '루틴에 더하기 좋은 입욕제와 샤워 아이템', bathProductImage],
+  ['Spot', '감성 사우나와 웰니스 스팟으로 확장', wellnessProductImage],
+] as const;
+
+const productTiles = [
+  ['Bath Add-on', '루틴에 더하는 입욕 아이템', bathProductImage],
+  ['Shower Care', '가볍게 시작하는 샤워 케어', showerProductImage],
+  ['Wellness Mood', '공간까지 이어지는 휴식감', wellnessProductImage],
 ] as const;
 
 function useScrollReveal() {
@@ -439,8 +455,9 @@ function HomePage() {
               바스타임은 오늘 몸 상태에 맞춰 무리 없이 따라할 수 있는 루틴을 추천합니다.
             </p>
             <div className="conditionMatrix" data-reveal="up">
-              {conditionCards.map(([label, title, meta]) => (
+              {conditionCards.map(([label, title, meta, image]) => (
                 <article className="conditionChip" key={title}>
+                  {image ? <img src={image} alt="" aria-hidden="true" /> : null}
                   <span>{label}</span>
                   <strong>{title}</strong>
                   <small>{meta}</small>
@@ -462,8 +479,9 @@ function HomePage() {
               분위기와 실제 루틴을 함께 시작할 수 있습니다.
             </p>
             <div className="moodGallery" data-reveal="up">
-              {moodCards.map(([tone, title, body]) => (
+              {moodCards.map(([tone, title, body, image]) => (
                 <article className={`moodCard ${tone}`} key={title}>
+                  <img src={image} alt="" aria-hidden="true" />
                   <span>{title}</span>
                   <p>{body}</p>
                 </article>
@@ -527,15 +545,27 @@ function HomePage() {
               목욕·샤워 전문 웰니스 가이드로 확장됩니다.
             </p>
             <div className="nextAxes" data-reveal="up">
-              {nextAxes.map(([title, body]) => (
+              {nextAxes.map(([title, body, image]) => (
                 <article key={title}>
+                  <img src={image} alt="" aria-hidden="true" />
                   <strong>{title}</strong>
                   <span>{body}</span>
                 </article>
               ))}
             </div>
           </div>
-          <img className="phoneShot featurePhone" data-reveal="right" src={productShot} alt="바스타임 제품 추천 화면" />
+          <div className="productVisual" data-reveal="right">
+            <img className="phoneShot featurePhone" src={productShot} alt="바스타임 제품 추천 화면" />
+            <div className="productTiles" aria-label="앱 제품 이미지 미리보기">
+              {productTiles.map(([label, title, image]) => (
+                <article key={label}>
+                  <img src={image} alt="" aria-hidden="true" />
+                  <small>{label}</small>
+                  <strong>{title}</strong>
+                </article>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="cta scene" data-reveal="scale">
