@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import homeShot from './assets/KakaoTalk_Photo_2026-04-28-10-54-59 001.jpeg';
@@ -63,6 +63,44 @@ const nextAxes = [
   ['Product', '루틴에 더하기 좋은 입욕제와 샤워 아이템'],
   ['Spot', '감성 사우나와 웰니스 스팟으로 확장'],
 ] as const;
+
+function useScrollReveal() {
+  useEffect(() => {
+    const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      targets.forEach((target) => target.classList.add('is-visible'));
+      return;
+    }
+
+    document.documentElement.classList.add('reveal-ready');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        rootMargin: '0px 0px -12% 0px',
+        threshold: 0.16,
+      },
+    );
+
+    targets.forEach((target) => observer.observe(target));
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove('reveal-ready');
+    };
+  }, []);
+}
 
 const privacySections = [
   {
@@ -324,7 +362,7 @@ function HomePage() {
             <span />
             <span />
           </div>
-          <div className="heroCopy">
+          <div className="heroCopy" data-reveal="left">
             <span className="badge">Everyday Bath Guide</span>
             <h1>오늘 상태에 맞는 목욕·샤워 루틴을 추천받아보세요</h1>
             <p>
@@ -336,15 +374,15 @@ function HomePage() {
               <a className="secondary" href="#flow">오늘 루틴 보기</a>
             </div>
           </div>
-          <div className="heroStack" aria-label="바스타임 앱 화면 미리보기">
+          <div className="heroStack" data-reveal="right" aria-label="바스타임 앱 화면 미리보기">
             <img className="phoneShot sideShot leftShot" src={timerShot} alt="바스타임 타이머 화면" />
             <img className="phoneShot mainShot" src={homeShot} alt="바스타임 앱 홈 화면" />
             <img className="phoneShot sideShot rightShot" src={completionShot} alt="바스타임 완료 기록 화면" />
           </div>
         </section>
 
-        <section className="section scene problemSection">
-          <div className="sectionHeader">
+        <section className="section scene problemSection" data-reveal="fade">
+          <div className="sectionHeader" data-reveal="up">
             <span>WHY BATH TIME</span>
             <h2>막상 쉬려고 하면, 어떻게 씻어야 할지 애매하니까요</h2>
             <p>
@@ -353,12 +391,12 @@ function HomePage() {
               바스타임은 이 막연함을 줄여줍니다.
             </p>
           </div>
-          <div className="questionBoard" aria-label="사용자가 느끼는 고민">
+          <div className="questionBoard" data-reveal="scale" aria-label="사용자가 느끼는 고민">
             <p>뜨겁게 씻어야 할까?</p>
             <p>샤워만 해도 괜찮을까?</p>
             <p>얼마나 해야 무리 없을까?</p>
           </div>
-          <div className="problemGrid">
+          <div className="problemGrid" data-reveal="up">
             {problemCards.map(([title, body]) => (
               <article className="problemPoint" key={title}>
                 <h3>{title}</h3>
@@ -368,12 +406,12 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section scene flowSection" id="flow">
-          <div className="sectionHeader">
+        <section className="section scene flowSection" id="flow" data-reveal="fade">
+          <div className="sectionHeader" data-reveal="left">
             <span>CORE FLOW</span>
             <h2>컨디션과 환경만 고르면, 오늘 루틴이 준비됩니다</h2>
           </div>
-          <div className="flowLayout">
+          <div className="flowLayout" data-reveal="up">
             <div className="flowSteps routineTimeline">
               {flowSteps.map(([label, title, body]) => (
                 <article className="flowStep" key={title}>
@@ -392,15 +430,15 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section scene conditionSection">
-          <div className="featureCopy">
+        <section className="section scene conditionSection" data-reveal="fade">
+          <div className="featureCopy" data-reveal="left">
             <span>CONDITION ROUTINES</span>
             <h2>몸 상태에 맞춘 컨디션 루틴</h2>
             <p>
               운동 후 뻐근한 날, 잠들기 어려운 밤, 술 마신 다음 날, 몸이 무겁고 붓는 날.
               바스타임은 오늘 몸 상태에 맞춰 무리 없이 따라할 수 있는 루틴을 추천합니다.
             </p>
-            <div className="conditionMatrix">
+            <div className="conditionMatrix" data-reveal="up">
               {conditionCards.map(([label, title, meta]) => (
                 <article className="conditionChip" key={title}>
                   <span>{label}</span>
@@ -410,12 +448,12 @@ function HomePage() {
               ))}
             </div>
           </div>
-          <img className="phoneShot featurePhone" src={careShot} alt="컨디션별 루틴 목록 화면" />
+          <img className="phoneShot featurePhone" data-reveal="right" src={careShot} alt="컨디션별 루틴 목록 화면" />
         </section>
 
-        <section className="section scene moodSection">
-          <img className="phoneShot moodPhone" src={moodShot} alt="바스타임 무드 루틴 화면" />
-          <div className="featureCopy">
+        <section className="section scene moodSection" data-reveal="fade">
+          <img className="phoneShot moodPhone" data-reveal="left" src={moodShot} alt="바스타임 무드 루틴 화면" />
+          <div className="featureCopy" data-reveal="right">
             <span>MOOD ROUTINES</span>
             <h2>분위기를 바꾸고 싶은 날엔, 무드 루틴</h2>
             <p>
@@ -423,7 +461,7 @@ function HomePage() {
               교토 숲, 비 오는 캠핑, 겨울 캐빈, 벽난로 옆 서재처럼 오늘 기분에 맞는
               분위기와 실제 루틴을 함께 시작할 수 있습니다.
             </p>
-            <div className="moodGallery">
+            <div className="moodGallery" data-reveal="up">
               {moodCards.map(([tone, title, body]) => (
                 <article className={`moodCard ${tone}`} key={title}>
                   <span>{title}</span>
@@ -434,8 +472,8 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section scene executionSection">
-          <div className="sectionHeader">
+        <section className="section scene executionSection" data-reveal="fade">
+          <div className="sectionHeader" data-reveal="up">
             <span>RUN AND RECORD</span>
             <h2>추천에서 끝나지 않고, 끝까지 따라갈 수 있게</h2>
             <p>
@@ -443,7 +481,7 @@ function HomePage() {
               짧게 쉬어도 괜찮습니다. 바스타임은 성취보다, 오늘 나에게 맞는 쉼을 쌓아갑니다.
             </p>
           </div>
-          <div className="executionFlow" aria-label="추천에서 기록까지 이어지는 흐름">
+          <div className="executionFlow" data-reveal="up" aria-label="추천에서 기록까지 이어지는 흐름">
             <article>
               <span>Recipe</span>
               <img className="phoneShot" src={recipeShot} alt="레시피 상세 화면" />
@@ -459,8 +497,8 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section scene safetySection">
-          <div className="sectionHeader">
+        <section className="section scene safetySection" data-reveal="fade">
+          <div className="sectionHeader" data-reveal="left">
             <span>SAFETY FIRST</span>
             <h2>편안함보다 먼저, 무리하지 않는 것</h2>
             <p>
@@ -468,7 +506,7 @@ function HomePage() {
               건강 상태가 걱정되는 경우, 무리한 입욕이나 냉수 단계는 피하도록 안내합니다.
             </p>
           </div>
-          <div className="safetyFilter" aria-label="안전 필터 흐름">
+          <div className="safetyFilter" data-reveal="scale" aria-label="안전 필터 흐름">
             {safetyCards.map(([label, title], index) => (
               <article className="safetyStep" key={title}>
                 <small>{label}</small>
@@ -479,8 +517,8 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="section scene productPreview">
-          <div>
+        <section className="section scene productPreview" data-reveal="up">
+          <div data-reveal="left">
             <span>COMING NEXT</span>
             <h2>루틴에 어울리는 제품과 공간까지</h2>
             <p>
@@ -488,7 +526,7 @@ function HomePage() {
               앞으로는 집에서의 목욕·샤워를 넘어, 감성 사우나와 웰니스 스팟까지 연결하는
               목욕·샤워 전문 웰니스 가이드로 확장됩니다.
             </p>
-            <div className="nextAxes">
+            <div className="nextAxes" data-reveal="up">
               {nextAxes.map(([title, body]) => (
                 <article key={title}>
                   <strong>{title}</strong>
@@ -497,10 +535,10 @@ function HomePage() {
               ))}
             </div>
           </div>
-          <img className="phoneShot featurePhone" src={productShot} alt="바스타임 제품 추천 화면" />
+          <img className="phoneShot featurePhone" data-reveal="right" src={productShot} alt="바스타임 제품 추천 화면" />
         </section>
 
-        <section className="cta scene">
+        <section className="cta scene" data-reveal="scale">
           <span>START TODAY</span>
           <h2>오늘은 어떻게 쉬어볼까요?</h2>
           <p>지금 컨디션과 가능한 환경에 맞춰 오늘의 바스타임을 시작해보세요.</p>
@@ -596,6 +634,8 @@ function SupportPage() {
 }
 
 function App() {
+  useScrollReveal();
+
   const path = window.location.pathname.replace(/\/$/, '') || '/';
 
   if (path === '/privacy') {
