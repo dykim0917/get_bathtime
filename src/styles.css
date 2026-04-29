@@ -1248,7 +1248,7 @@ h2 {
   main,
   .siteHeader,
   .siteFooter {
-    width: min(100% - 28px, 680px);
+    width: min(100% - 32px, 680px);
   }
 
   .siteHeader,
@@ -1266,10 +1266,17 @@ h2 {
     min-height: auto;
     gap: 30px;
     padding-top: 30px;
+    width: min(100vw - 32px, 680px);
   }
 
   h1 {
-    font-size: clamp(40px, 12vw, 56px);
+    font-size: clamp(38px, 11vw, 52px);
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: clamp(34px, 9vw, 42px);
+    line-height: 1.14;
   }
 
   .heroCopy > p,
@@ -1286,16 +1293,16 @@ h2 {
   }
 
   .heroStack {
-    min-height: 560px;
+    min-height: 510px;
     overflow: hidden;
   }
 
   .mainShot {
-    width: min(82vw, 330px);
+    width: min(78vw, 310px);
   }
 
   .sideShot {
-    width: 210px;
+    width: min(48vw, 190px);
     opacity: 0.5;
   }
 
@@ -1325,6 +1332,14 @@ h2 {
     font-size: 24px;
   }
 
+  .moodSection .featureCopy {
+    order: 1;
+  }
+
+  .moodPhone {
+    order: 2;
+  }
+
   .screenRail,
   .screenRail.wide {
     justify-content: flex-start;
@@ -1335,7 +1350,7 @@ h2 {
 
   .screenRail .phoneShot,
   .screenRail.wide .phoneShot {
-    width: min(78vw, 310px);
+    width: min(72vw, 286px);
     flex: 0 0 auto;
     scroll-snap-align: center;
   }
@@ -1355,7 +1370,24 @@ h2 {
   }
 
   .featurePhone {
-    width: min(82vw, 330px);
+    width: min(76vw, 300px);
+  }
+
+  .moodPhone {
+    width: min(76vw, 300px);
+  }
+
+  .executionFlow .phoneShot,
+  .executionFlow .centerStage .phoneShot {
+    width: min(76vw, 300px);
+  }
+
+  .conditionChip {
+    min-height: 124px;
+  }
+
+  .conditionChip img {
+    width: 42%;
   }
 
   .productVisual {
@@ -1372,6 +1404,10 @@ h2 {
 
   .productTiles article {
     min-height: 84px;
+  }
+
+  .cta {
+    margin-bottom: 62px;
   }
 
   .legalSummary {
