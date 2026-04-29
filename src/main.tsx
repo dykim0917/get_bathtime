@@ -20,7 +20,6 @@ import bathProductImage from './assets/app-assets/products/bs_v1_014.jpg';
 import showerProductImage from './assets/app-assets/products/bs_v1_003.jpg';
 import wellnessProductImage from './assets/app-assets/products/bs_v1_016.jpg';
 
-const appUrl = 'https://app.getbathtime.com';
 const supportEmail = 'getbathtime@gmail.com';
 const legalMeta = {
   serviceName: '바스타임',
@@ -340,7 +339,7 @@ function Header() {
         <a href="/#flow">사용 흐름</a>
         <a href="/privacy">개인정보처리방침</a>
         <a href="/terms">이용약관</a>
-        <a href={appUrl}>앱 열기</a>
+        <span className="navDisabled" aria-disabled="true">커밍순</span>
       </nav>
     </header>
   );
@@ -384,7 +383,7 @@ function HomePage() {
               가능한 환경에 맞춰 온도, 시간, 순서까지 무리 없이 안내합니다.
             </p>
             <div className="actions">
-              <a className="primary" href={appUrl}>앱 시작하기</a>
+              <span className="primary disabledAction" role="button" aria-disabled="true">앱 시작하기 · 커밍순</span>
               <a className="secondary" href="#flow">오늘 루틴 보기</a>
             </div>
           </div>
@@ -571,9 +570,9 @@ function HomePage() {
           <h2>오늘은 어떻게 쉬어볼까요?</h2>
           <p>지금 컨디션과 가능한 환경에 맞춰 오늘의 바스타임을 시작해보세요.</p>
           <div className="actions center">
-            <a className="primary" href={appUrl}>바스타임 시작하기</a>
-            <a className="secondary" href={appUrl}>앱 다운로드</a>
-            <a className="secondary" href={appUrl}>웹에서 먼저 보기</a>
+            <span className="primary disabledAction" role="button" aria-disabled="true">바스타임 시작하기 · 커밍순</span>
+            <span className="secondary disabledAction" role="button" aria-disabled="true">앱 다운로드 · 커밍순</span>
+            <span className="secondary disabledAction" role="button" aria-disabled="true">웹에서 먼저 보기 · 커밍순</span>
           </div>
         </section>
       </main>
